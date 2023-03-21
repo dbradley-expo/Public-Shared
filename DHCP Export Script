@@ -1,0 +1,27 @@
+$scopes = Get-DhcpServerv4Scope -ComputerName *TYPE_COMPUTER_NAME_HERE*
+$report = [System.Collections.Generic.List[Object]]::new()
+Foreach ($scope in $scopes){
+    $failover = $null
+    $failover = Get-Dhcpserverv4Failover -ScopeId $scope.ScopeId
+    $options = Get-Dhcpserverv4OptionValue -ScopeId $scope.ScopeId
+    $optionvalues = $null
+    ForEach ($option in $options) {
+        $values = $null
+        $values = "$($option.OptionId), $($option.Name) , $($option.Value)"
+        $optionvalues += "$Values | "
+        }
+    $obj = [PSCustomObject][ordered]@{
+        "State" = $scope.state
+        "Scope Name" = $scope.name
+        "Scope Id" = $scope.ScopeId
+        "Subnet Mask" = $scope.SubnetMask
+        "Start Range" = $Scope.StartRange
+        "End Range" = $scope.EndRange
+        "Lease Duration" = $Scope.LeaseDuration
+        "Failover Partner" = $failover.name
+        "dhcp options" = $optionvalues
+        }
+$report.Add($obj)
+}
+
+$report | Export-CSV -path C:\temp\DHCPReport.csv
