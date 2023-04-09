@@ -1,3 +1,4 @@
 How to use
 
-The script will first download the latest csv file containing all current MS Graph PowerShell reference to the default Windows temp location, make sure you have access to C:\Windows\temp in the context of your current PowerShell session. The data will then be save in the $ref variable for use throughout the script.
+The script will first download the latest csv file containing all current MS Graph PowerShell reference to the default Windows temp location, ]
+make sure you have access to C:\Windows\temp in the context of your current PowerShell session. The data will then be save in the $ref variable for use throughout the script.
